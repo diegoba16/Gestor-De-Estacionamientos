@@ -9,14 +9,54 @@
 
 <body>
     <h1>Gestor de Estacionamiento</h1>
-    <h5>Esta APP es parte del desafío del primer entregable para el curso de Javascript.<br>
-        La misma permite de forma sencilla la gestión de un estacionamiento.<h5></p>
-    <ul>
-        <li><h3>Añadir nuevos vehículos</h3><p>Permite agregar los vehículos asociados al servicio de Parking por marca, modelo, matricula (patente).</p></li>
-        <li><h3>Agregar cobros</h3><p>Permite asociar cobros a los vehículos agregados previamente.</p></li>
-        <li><h3>Revisar vehículos y cobros</h3><p>Permite visualizar todos los vehículos y cobros realizados sobre los mismos</p></li>
-    </ul>
-    <script src="main.js"></script>
+    <h5>Esta APP es parte del desafío del segundo entregable para el curso de Javascript.<br>
+        La misma permite de forma sencilla la gestión de un estacionamiento.<h5>
+            </p>
+            <ul>
+                <li>
+                    <h3>Añadir nuevos vehículos</h3>
+                    <div>
+                        <form id="vehicle-form">
+                            <label for="marca">Marca:</label>
+                            <input type="text" id="marca" name="marca" required>
+                            <br>
+                            <label for="modelo">Modelo:</label>
+                            <input type="text" id="modelo" name="modelo" required>
+                            <br>
+                            <label for="matricula">Matrícula:</label>
+                            <input type="text" id="matricula" name="matricula" required>
+                            <br>
+                            <button type="submit">Agregar Vehículo</button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <h3>Agregar cobros</h3>
+                    <p>Permite asociar cobros a los vehículos agregados previamente.</p>
+                    <div>
+                        <form id="sale-form">
+                            <label for="plate">Matricula:</label>
+                            <input type="text" id="plate" name="plate" required>
+                            <br>
+                            <label for="description">Descripción:</label>
+                            <input type="text" id="description" name="description" required>
+                            <br>
+                            <label for="price">Precio:</label>
+                            <input type="number" id="price" name="price" required>
+                            <br>
+                            <button type="submit">Agregar Cobro</button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <h3>Revisar vehículos y cobros</h3>
+                    <div class="show-vehicles">
+                        <h3>Lista de vehículos registrados</h3>
+                        <div id="vehicle-list"></div>
+                    </div>
+                </li>
+            </ul>
+            <script src="main.js"></script>
 </body>
 
 </html>

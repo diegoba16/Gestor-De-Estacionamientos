@@ -1,24 +1,22 @@
-alert("Bienvenido al gestor de estacionamientos v1.0");
 
-const vehicles = [];
+const vehicles = JSON.parse(localStorage.getItem("vehicles")) || [];
+
 const addVehicle = (marca, modelo, matricula) => {
-    let flag = confirm("Desea agregar el vehículo " + marca + " " + modelo + " con matricula " + matricula + "?")
-    if (flag) {
-        vehicles.push({
-            marca,
-            modelo,
-            matricula,
-            sales: []
-        });
-    }
+    vehicles.push({
+        marca,
+        modelo,
+        matricula,
+        sales: []
+    });
+    localStorage.setItem("vehicles", JSON.stringify(vehicles))
 };
+
 
 const addSale = (matricula, description, price) => {
     if (vehicles.length < 1) {
         alert("No se encuentran vehículos registrados");
     } else {
         const vehicle = vehicles.find(v => v.matricula === matricula);
-        
         if (vehicle) {
             let flag = confirm("Desea agregar la venta al vehículo matriculado " + matricula + "?");
             if (flag) {
@@ -26,6 +24,7 @@ const addSale = (matricula, description, price) => {
                     description,
                     price
                 });
+                localStorage.setItem("vehicles", JSON.stringify(vehicles))
             }
             alert("Gasto agregado exitosamente")
         } else {
@@ -35,87 +34,73 @@ const addSale = (matricula, description, price) => {
 };
 
 const showVehicles = () => {
+    const vehicleListContainer = document.getElementById('vehicle-list');
+    vehicleListContainer.innerHTML = ''; 
+
     if (vehicles.length < 1) {
-        alert("No hay vehículos registrados.");
+        vehicleListContainer.innerHTML = '<p>No hay vehículos registrados.</p>';
         return;
     }
 
-    let message = "Lista de vehículos:\n\n";
     vehicles.forEach((vehicle, index) => {
-        message += `Vehículo ${index + 1}:\n`;
-        message += `Marca: ${vehicle.marca}\n`;
-        message += `Modelo: ${vehicle.modelo}\n`;
-        message += `Matrícula: ${vehicle.matricula}\n`;
+        const vehicleDiv = document.createElement('div');
+
+        vehicleDiv.innerHTML = `
+            <h4>Vehículo ${index + 1}</h4>
+            <p><strong>Marca:</strong> ${vehicle.marca}</p>
+            <p><strong>Modelo:</strong> ${vehicle.modelo}</p>
+            <p><strong>Matrícula:</strong> ${vehicle.matricula}</p>
+        `;
 
         if (vehicle.sales.length > 0) {
-            message += "Ventas:\n";
-            vehicle.sales.forEach((sale) => {
-                message += `  Venta: ${sale.description} - $${sale.price}\n`;
+            const salesList = document.createElement('ul');
+            salesList.innerHTML = '<h5>Ventas:</h5>';
+
+            vehicle.sales.forEach((sale, saleIndex) => {
+                const saleItem = document.createElement('li');
+                saleItem.textContent = `${sale.description} - $${sale.price}`;
+                salesList.appendChild(saleItem);
             });
+
+            vehicleDiv.appendChild(salesList);
         } else {
-            message += "No hay ventas registradas.\n";
+            vehicleDiv.innerHTML += '<p>No hay ventas registradas.</p>';
         }
 
-        message += "\n";
+        vehicleListContainer.appendChild(vehicleDiv);
     });
-
-    alert(message);
 };
 
 
-const parkingCore = () => {
-    let option = Number(
-        prompt(
-            "Ingrese la opción deseada de forma numérica:\n\n  1 - Ingresar un nuevo vehículo\n  2 - Ingresar gasto sobre vehículo\n  3 - Revisar movimientos\n"
-        )
-    );
+document.getElementById('vehicle-form').addEventListener('submit', (event) => {
+    event.preventDefault();
 
-    let flag = true;
 
-    while (flag) {
-        switch (option) {
-            case 1:
-                alert("Seleccionó agregar un nuevo vehículo");
-                let addBrand = (prompt("Ingresar marca del vehículo"))
-                let addModel = (prompt("Ingresar modelo del vehículo"))
-                let addPlate = (prompt("Ingresar matricula del vehículo"))
-                addVehicle(addBrand, addModel, addPlate)
-                flag = confirm(
-                    "Desea ingresar otra opción?\nSeleccione Aceptar para continuar o Cancelar para salir del programa"
-                );
-                break;
-            case 2:
-                alert("Va a asociado un cobro sobre un vehículo existente");
-                let addPlateSale = (prompt("Ingresar matricula del vehículo"))
-                let addDescription = (prompt("Ingresa descripción sobre la venta"))
-                let addPrice = Number(prompt("Ingresa el precio en dolares sin signos ni puntuación"))
-                addSale(addPlateSale, addDescription, addPrice)
-                flag = confirm(
-                    "Desea ingresar otra opción?\nSeleccione Aceptar para continuar o Cancelar para salir del programa"
-                );
-                break;
-            case 3:
-                showVehicles();
-                flag = confirm(
-                    "Desea ingresar otra opción?\nSeleccione Aceptar para continuar o Cancelar para salir del programa"
-                );
-                break;
-            default:
-                flag = confirm(
-                    "La opción ingresada no es correcta.\nAcepte para volver al menu o cancele para salir del programa"
-                );
-                break;
-        }
+    const marca = document.getElementById('marca').value;
+    const modelo = document.getElementById('modelo').value;
+    const matricula = document.getElementById('matricula').value;
 
-        if (flag) {
-            console.log("Hola")
-            console.log(vehicles)
-            option = Number(
-                prompt(
-                    "Ingrese la opción deseada de forma numérica:\n\n  1 - Ingresar un nuevo vehículo\n  2 - Ingresar gasto sobre vehículo\n  3 - Revisar movimientos\n"
-                )
-            );
-        }
-    }
-};
-parkingCore();
+
+    addVehicle(marca, modelo, matricula);
+
+    event.target.reset();
+    showVehicles(); 
+});
+
+
+document.getElementById('sale-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+
+
+    const matricula = document.getElementById('plate').value;
+    const description = document.getElementById('description').value;
+    const price = document.getElementById('price').value;
+
+
+    addSale(matricula, description, price);
+
+    event.target.reset();
+    showVehicles(); 
+});
+showVehicles(); 
+
