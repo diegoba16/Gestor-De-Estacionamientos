@@ -46,7 +46,6 @@ const showVehicles = () => {
         const vehicleDiv = document.createElement('div');
 
         vehicleDiv.innerHTML = `
-            <h4>Vehículo ${index + 1}</h4>
             <p><strong>Marca:</strong> ${vehicle.marca}</p>
             <p><strong>Modelo:</strong> ${vehicle.modelo}</p>
             <p><strong>Matrícula:</strong> ${vehicle.matricula}</p>
@@ -54,7 +53,7 @@ const showVehicles = () => {
 
         if (vehicle.sales.length > 0) {
             const salesList = document.createElement('ul');
-            salesList.innerHTML = '<h5>Ventas:</h5>';
+            salesList.innerHTML = '<h4>Ventas:</h4>';
 
             vehicle.sales.forEach((sale, saleIndex) => {
                 const saleItem = document.createElement('li');

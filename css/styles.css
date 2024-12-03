@@ -1,0 +1,97 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+header{
+    background-color: lightblue;
+    display: flex;
+    padding: 10px;
+}
+
+header img{
+    width: 100px;
+    padding-right: 50px;
+    padding-left: 5px;
+}
+
+header h1{
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+main h2{
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+
+.functions{
+    margin: 0px;
+    margin-left: 15px;
+    padding: 0px;
+}
+
+.functions ul{
+    margin: 0px;
+    padding: 0px;
+}
+
+.functions ul li{
+    list-style: none;
+    padding-bottom: 30px;
+}
+
+.functions ul li h3{
+    font-size: 25px;
+    font-weight: bold;
+    color: #2269AD;
+}
+
+.form-style{
+    display: flex;
+}
+
+.form-style form{
+    display: flex;
+    flex-direction: column;
+}
+
+.vehicle-list{
+    display: block;
+    flex-direction: column;
+    width: 300px;
+}
+
+.vehicle-list div{
+    margin-bottom: 25px;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.vehicle-list p{
+    margin: 0;
+    padding: 3px;
+    font-size: 16px;
+}
+
+.vehicle-list h4{
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.vehicle-list div ul li{
+    margin: 0px;
+    padding: 5px 5px;
+    margin-left: 5px;
+    list-style: inside;
+}
