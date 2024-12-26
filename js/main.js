@@ -14,21 +14,47 @@ const addVehicle = (marca, modelo, matricula) => {
 
 const addSale = (matricula, description, price) => {
     if (vehicles.length < 1) {
-        alert("No se encuentran vehículos registrados");
+        Swal.fire({
+            title: "Error",
+            text: "No se encuentran vehículos registrados",
+            icon: "error"
+          });
     } else {
         const vehicle = vehicles.find(v => v.matricula === matricula);
         if (vehicle) {
-            let flag = confirm("Desea agregar la venta al vehículo matriculado " + matricula + "?");
-            if (flag) {
-                vehicle.sales.push({
-                    description,
-                    price
-                });
-                localStorage.setItem("vehicles", JSON.stringify(vehicles))
-            }
-            alert("Gasto agregado exitosamente")
+            Swal.fire({
+                title: "Desea agregar la venta al vehículo matriculado " + matricula + "?",
+                showDenyButton: true,
+                confirmButtonText: "Aceptar",
+                denyButtonText: `Cancelar`
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    vehicle.sales.push({
+                        description,
+                        price
+                    });
+                    localStorage.setItem("vehicles", JSON.stringify(vehicles));
+                    showVehicles ();
+        
+                    Swal.fire({
+                        icon: "success",
+                        title: "Venta agregada exitosamente",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire({
+                        title: "Venta cancelada",
+                        icon: "warning"
+                      });
+                }
+              });
         } else {
-            alert("La matrícula no existe");
+            Swal.fire({
+                title: "Error",
+                text: "La matrícula no existe",
+                icon: "error"
+              });
         }
     }
 };
