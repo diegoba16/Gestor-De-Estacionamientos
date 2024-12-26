@@ -1,0 +1,36 @@
+{
+    "sales": [
+      {
+        "description": "Estacionamiento 30 minutos",
+        "price": 3.5
+      },
+      {
+        "description": "Estacionamiento 1 hora",
+        "price": 5
+      },
+      {
+        "description": "Estacionamiento 1 mes",
+        "price": 90
+      },
+      {
+        "description": "Lavado Exterior",
+        "price": 6.5
+      },
+      {
+        "description": "Lavado Completo",
+        "price": 8
+      },
+      {
+        "description": "Lavado Tapizado",
+        "price": 40
+      },
+      {
+        "description": "Tratamiento Ceramico",
+        "price": 150
+      },
+      {
+        "description": "Otros",
+        "price": 0
+      }
+    ]
+  }

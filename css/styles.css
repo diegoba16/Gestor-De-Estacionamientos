@@ -65,7 +65,7 @@ main h2{
 .vehicle-list{
     display: block;
     flex-direction: column;
-    width: 300px;
+    width: 360px;
 }
 
 .vehicle-list div{

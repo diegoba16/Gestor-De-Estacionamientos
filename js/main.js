@@ -9,9 +9,50 @@ const addVehicle = (marca, modelo, matricula) => {
         sales: []
     });
     localStorage.setItem("vehicles", JSON.stringify(vehicles))
+    Swal.fire({
+        icon: "success",
+        title: "Vehículo agregado exitosamente",
+        showConfirmButton: false,
+        timer: 2000
+    });
 };
 
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('data/salesData.json')
+        .then(response => response.json())
+        .then(data => {
+            const selectElement = document.getElementById('sale-select');
+            const priceInput = document.getElementById('price');
 
+            data.sales.forEach(sale => {
+                const optionElement = document.createElement('option');
+                optionElement.value = JSON.stringify(sale);
+                optionElement.text = `${sale.description} - $${sale.price}`;
+                selectElement.appendChild(optionElement);
+            });
+
+            selectElement.addEventListener('change', () => {
+                const selectedSale = JSON.parse(selectElement.value); 
+                priceInput.value = selectedSale.price || ""; 
+            });
+        })
+        .catch(error => console.error('Error al cargar el JSON:', error));
+
+        const saleForm = document.getElementById('sale-form');
+        saleForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+        
+            const matricula = document.getElementById('plate').value;
+            const selectedSale = JSON.parse(document.getElementById('sale-select').value);
+            const description = selectedSale.description;
+            const price = selectedSale.price;
+        
+            addSale(matricula, description, price);
+        
+            event.target.reset();
+            showVehicles(); 
+        });
+});
 const addSale = (matricula, description, price) => {
     if (vehicles.length < 1) {
         Swal.fire({
