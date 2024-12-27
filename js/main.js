@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const matricula = document.getElementById('plate').value;
             const selectedSale = JSON.parse(document.getElementById('sale-select').value);
             const description = selectedSale.description;
-            const price = selectedSale.price;
+            let price = document.getElementById('price').value;
         
             addSale(matricula, description, price);
         
